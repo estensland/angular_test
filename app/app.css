@@ -1,0 +1,200 @@
+/* app css stylesheet */
+
+.body{
+  padding-bottom:60px;
+}
+
+.page-container {
+  min-height:100%;
+  position:relative;
+}
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0 3em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+/*---------------------*/
+
+h2{
+  width:100%;
+  text-indent: 4em;
+}
+
+
+/*Character Index*/
+
+.main-table{
+  margin-left: 20px;
+  margin-right: 20px;
+  color: black;
+}
+
+.main-table a{
+  color: #876AFC;
+}
+
+.main-table td{
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.main-table th{
+  text-align: center;
+  background-color: red;
+  padding: 5px;
+  font-weight: bold;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.main-table .right-tab-header{
+  border-top-right-radius: 20px;
+  border-right: 0;
+}
+
+.main-table .left-tab-header{
+  border-top-left-radius: 20px;
+  border-left: 0;
+}
+
+.nickname-column{
+  width: 18%;
+}
+
+.occupation-column{
+  width: 20%;
+}
+
+
+/*Character Show*/
+
+.character-text-info-section{
+  width: 100%;
+}
+
+.character-text-info-section div{
+  display: inline-block;
+}
+
+.weapons-info-panel{
+  width: 45%;
+  text-align:left;
+  margin: 10px;
+  padding: 2px;
+  border: 2px solid black;
+  background-color: #eee;
+}
+
+.weapons-info-panel li{
+  list-style: none;
+}
+
+.weapons-info-panel img{
+  width: 70%;
+  height: auto;
+}
+
+.weapon-info-slide{
+  width: 90%;
+  text-align:left;
+  padding: 2px;
+  border: 2px solid black;
+  background-color: #eee;
+}
+
+.character-info-panel{
+  margin-left: 62%;
+  width: 35%;
+  text-align:left;
+  padding: 5px;
+  border: 2px solid black;
+  background-color: #eee;
+}
+
+.character-info-panel img{
+  width: 70%;
+  height: 70%;
+  margin-left: 17%;
+}
+
+.character-info-panel span{
+  font-weight: bold;
+}
+
+.character-info-panel h4{
+  text-indent: 2em;
+  margin: 0;
+  padding: 3px;
+  background-color: red;
+}
+
+.character-info-panel p{
+  margin: 0;
+  padding: 2px;
+}
+
+/* Footer */
+.footer {
+  width:100%;
+  height:30px;
+  margin-top: 80px;
+  margin-left: 10px;
+  bottom:0;
+  left:0;
+  position:absolute;
+  font-size: 78%;
+  display: block;
+}
+
+/* Weapons */
+.weapons-info{
+  border: 1px solid black;
+  display: inline-block;
+  margin-left: 8%;
+  padding: 5px;
+  width: 40%;
+  vertical-align: top;
+  margin-top: 40px;
+}
+
+.weapons-info p {
+  margin: 2px;
+}
+
+.weapons-image{
+  width: 40%;
+  margin-left: 4%;
+  border: 1px solid black;
+  display: inline-block;
+}
+
+.weapons-image img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
