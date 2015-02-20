@@ -7,7 +7,7 @@ angular.module('myApp.dictionary', ['ngRoute'])
       templateUrl: 'partials/dictionary/',
       controller: 'DictionaryCtrl',
       resolve: {
-        words: ['$http', function($http) {
+        json_grab: ['$http', function($http) {
           return $http.get('/api/words.json').then(function(response) {
             return response.data;
           });
@@ -16,7 +16,8 @@ angular.module('myApp.dictionary', ['ngRoute'])
     });
   }])
 
-  .controller('DictionaryCtrl', ['$scope', '$routeParams', 'words', function($scope, $routeParams, words) {
+  .controller('DictionaryCtrl', ['$scope', '$routeParams', 'json_grab', function($scope, $routeParams, json_grab) {
     $scope.title = 'Dictionary';
-    $scope.words = words;
+    $scope.codex = json_grab.codex;
+    $scope.roots = json_grab.roots;
 }])
