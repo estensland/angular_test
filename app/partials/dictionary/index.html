@@ -6,7 +6,8 @@
     <th class="right-tab-header">Definition</th>
   </thead>
   <tr ng-repeat="root in roots">
-    <td>{{root.letters}}</td>
+    <td>{{root.root}}</td>
     <td>{{root.definition}}</td>
+    <td><a ng-click='propogateRoot()'></a></td>
   </tr>
 </table>

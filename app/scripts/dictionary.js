@@ -8,7 +8,7 @@ angular.module('myApp.dictionary', ['ngRoute'])
       controller: 'DictionaryCtrl',
       resolve: {
         json_grab: ['$http', function($http) {
-          return $http.get('/api/words.json').then(function(response) {
+          return $http.get('/api/roots.json').then(function(response) {
             return response.data;
           });
         }]
@@ -20,4 +20,7 @@ angular.module('myApp.dictionary', ['ngRoute'])
     $scope.title = 'Dictionary';
     $scope.codex = json_grab.codex;
     $scope.roots = json_grab.roots;
+    $scope.propogateRoot = function(){
+      console.log('test')
+    }
 }])

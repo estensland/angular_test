@@ -8,7 +8,7 @@ angular.module('myApp.createWords', ['ngRoute'])
       controller: 'CreateWordsCtrl',
       resolve: {
         json_grab: ['$http','$routeParams', function($http, $routeParams) {
-          return 5;
+          z
         }],
       }
     });
