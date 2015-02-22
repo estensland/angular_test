@@ -1,13 +1,16 @@
 <h2>{{title}}</h2>
 
+<h4>Root: {{letters}} Def: {{root.def}}</h4>
+
+
 <table class="main-table">
   <thead>
     <th class="left-tab-header">Root</th>
     <th class="right-tab-header">Definition</th>
   </thead>
-  <tr ng-repeat="(root, info) in roots">
-    <td>{{root}}</td>
+  <tr ng-repeat="(feather, info) in root.wings">
+    <td>{{feather}}</td>
     <td>{{info.def}}</td>
-    <td><a ng-click='propogateRoot(root)'></a></td>
+    <td><a ></a></td>
   </tr>
 </table>
