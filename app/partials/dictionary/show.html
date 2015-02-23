@@ -5,12 +5,11 @@
 
 <table class="main-table">
   <thead>
-    <th class="left-tab-header">Root</th>
+    <th class="left-tab-header">Feather</th>
     <th class="right-tab-header">Definition</th>
   </thead>
-  <tr ng-repeat="(feather, info) in root.wings">
-    <td>{{feather}}</td>
-    <td>{{info.def}}</td>
-    <td><a ></a></td>
+  <tr ng-repeat="info in root.wings">
+    <td>{{info["def"]}}</td>
+    <td>{{info}}</td>
   </tr>
 </table>

@@ -6,7 +6,7 @@ angular.module('myApp', [
   'myApp.home',
   'myApp.grammar',
   'myApp.dictionary',
-  'myApp.create_words',
+  'myApp.createWords',
   'myApp.version'
 ]).
 config(['$routeProvider', function($routeProvider) {

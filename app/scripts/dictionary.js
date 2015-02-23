@@ -1,5 +1,21 @@
 'use strict';
 
+var propogateFeathers = function(key, letters, codexSequence, sequence){
+  var codex = codexSequence[key];
+  var wing = {};
+
+  if (codex === "l" || codex === "der" || codex === "adj" || codex === "adv") {
+    console.log(key, letters, codexSequence, sequence)
+  }
+  else{
+    var feather = codex.replace(/\$/, letters[0].toUpperCase());
+    feather = feather.replace(/\^/, letters[1].toLowerCase());
+    feather = feather.replace(/\*/, letters[2].toLowerCase());
+    wing[feather] = {"def": sequence.def}
+  }
+  return wing;
+}
+
 angular.module('myApp.dictionary', ['ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
@@ -11,7 +27,7 @@ angular.module('myApp.dictionary', ['ngRoute'])
           return $http.get('/api/roots.json').then(function(response) {
             return response.data;
           });
-        }]
+        }],
       }
     });
     $routeProvider.when('/dictionary/:root', {
@@ -34,21 +50,18 @@ angular.module('myApp.dictionary', ['ngRoute'])
 }])
 
   .controller('EntryCtrl', ['$scope', '$routeParams', 'json_grab', function($scope, $routeParams, json_grab) {
-    $scope.title = 'Dictionary: ' + $routeParams;
     $scope.codex = json_grab.codex;
-    $scope.letters = $routeParams
-    $scope.root = json_grab.roots[$routeParams];
+    $scope.letters = $routeParams.root.toUpperCase();
+    $scope.title = 'Dictionary: ' + $scope.letter;
+    $scope.root = json_grab.roots[$routeParams.root.toUpperCase()];
 
-    var rootRecord = $scope.roots[root];
+    var rootRecord = $scope.root;
     var wings = [];
 
-    for(var i = 0, ii =  rootRecord.sequence.length; i < ii; i ++){
-      var codex = $scope.codex[rootRecord.sequence[i]];
+    var objKeys = Object.keys(rootRecord.sequence)
 
-      var feather = codex.replace(/\$/, root[0]);
-      feather = feather.replace(/\^/, root[1]);
-      feather = feather.replace(/\*/, root[2]);
-      wings.push({feather: rootRecord.sequence[i].def});
+    for(var i = 0, ii = objKeys.length; i < ii; i ++){
+      wings.push(propogateFeathers(objKeys[i], $scope.letters, $scope.codex, rootRecord.sequence[objKeys[i]]));
     }
     $scope.root.wings = wings;
 }])

@@ -6,8 +6,7 @@
     <th class="right-tab-header">Definition</th>
   </thead>
   <tr ng-repeat="(root, info) in roots">
-    <td>{{root}}</td>
+    <td><a ng-href="#/dictionary/{{root}}">{{root}}</a></td>
     <td>{{info.def}}</td>
-    <td><a ng-click='propogateRoot(root)'></a></td>
   </tr>
 </table>
