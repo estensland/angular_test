@@ -1,0 +1,17 @@
+<h2>{{title}}</h2>
+
+<h4>Root: {{letters}} Def: {{root.def}}</h4>
+
+
+<table class="main-table">
+  <thead>
+    <th class="left-tab-header">Type</th>
+    <th> Feather</th>
+    <th class="right-tab-header">Definition</th>
+  </thead>
+  <tr ng-repeat="wing in root.wings">
+    <td>{{wing.form}}</td>
+    <td>{{wing.feather}}</td>
+    <td>{{wing.def}}</td>
+  </tr>
+</table>
