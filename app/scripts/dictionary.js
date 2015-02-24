@@ -1,17 +1,50 @@
 'use strict';
 
 var propogateFeathers = function(key, letters, codexSequence, sequence){
-  var codex = codexSequence[key];
   var wing = {};
+  if (key === "l"){wing.levels = []}
+  else if (key === "der"){wing.ders = []}
 
-  if (codex === "l" || codex === "der" || codex === "adj" || codex === "adv") {
-    console.log(key, letters, codexSequence, sequence)
+  if (key === "l" || key === "der" || key === "adj" || key === "adv") {
+    for (var i = 0, ii = Object.keys(sequence).length; i < ii; i ++){
+      for (var y = 0, yy = Object.keys(sequence[Object.keys(sequence)[i]]).length; y < yy; y ++){
+        if (key === "l"){
+          var middleKey = Object.keys(sequence)[i]
+          var subKey = Object.keys(sequence[middleKey])[y]
+          var codex = codexSequence[key][middleKey] + codexSequence[subKey]
+          var feather = codex.replace(/\$/, letters[0].toLowerCase());
+          feather = feather.replace(/\^/, letters[1].toLowerCase());
+          feather = feather.replace(/\*/, letters[2].toLowerCase());
+          feather = feather.charAt(0).toUpperCase() + feather.slice(1);
+
+          var comboKey = key + middleKey + subKey;
+
+          wing.levels.push({form: comboKey, feather: feather, def: sequence[middleKey][subKey].def})
+        }
+        else if (key === "der"){
+          var middleKey = Object.keys(sequence)[i]
+          var subKey = Object.keys(sequence[middleKey])[y]
+          var codex =  codexSequence[subKey] + 'a' + codexSequence[key][middleKey - 1]
+
+          var feather = codex.replace(/\$/, letters[0].toLowerCase());
+          feather = feather.replace(/\^/, letters[1].toLowerCase());
+          feather = feather.replace(/\*/, letters[2].toLowerCase());
+          feather = feather.charAt(0).toUpperCase() + feather.slice(1);
+
+          var comboKey = middleKey + subKey;
+
+          wing.ders.push({form: comboKey, feather: feather, def: sequence[middleKey][subKey].def})
+        }
+      }
+    }
   }
   else{
-    var feather = codex.replace(/\$/, letters[0].toUpperCase());
+    var codex = codexSequence[key];
+    var feather = codex.replace(/\$/, letters[0].toLowerCase());
     feather = feather.replace(/\^/, letters[1].toLowerCase());
     feather = feather.replace(/\*/, letters[2].toLowerCase());
-    wing[feather] = {"def": sequence.def}
+    feather = feather.charAt(0).toUpperCase() + feather.slice(1);
+    wing = {form: key, feather: feather, def: sequence.def}
   }
   return wing;
 }
@@ -61,7 +94,21 @@ angular.module('myApp.dictionary', ['ngRoute'])
     var objKeys = Object.keys(rootRecord.sequence)
 
     for(var i = 0, ii = objKeys.length; i < ii; i ++){
-      wings.push(propogateFeathers(objKeys[i], $scope.letters, $scope.codex, rootRecord.sequence[objKeys[i]]));
+      var result = propogateFeathers(objKeys[i], $scope.letters, $scope.codex, rootRecord.sequence[objKeys[i]])
+      if (typeof result.levels === 'object'){
+        for (var z = 0, zz = result.levels.length; z < zz; z ++) {
+          wings.push(result.levels[z]);
+        };
+      }
+      else if (typeof result.ders === 'object'){
+        for (var z = 0, zz = result.ders.length - 1; z < zz; z ++) {
+          wings.push(result.ders[z]);
+        };
+      }
+      else{
+        wings.push(result);
+      }
     }
+
     $scope.root.wings = wings;
 }])
