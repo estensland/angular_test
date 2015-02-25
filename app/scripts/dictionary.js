@@ -1,25 +1,47 @@
 'use strict';
 
-var propogateFeathers = function(key, letters, codexSequence, sequence){
+var generateCodex = function(key, masterCodex){
+  var splitKey = key.split('').reverse();
+  var skeletonCodex = "";
+  for (var i = 0, ii = splitKey.length; i < ii; i++) {
+    var codexFraction = masterCodex.codex[splitKey[i]];
+
+    if(!codexFraction){
+      codexFraction = masterCodex.codex[splitKey[i+1]];
+      codexFraction = codexFraction[splitKey[i]];
+      i++;
+   }
+
+    skeletonCodex = codexFraction + skeletonCodex;
+  };
+  return skeletonCodex;
+}
+
+var propogateFeathers = function(key, letters, codexSequence, sequence, preSetCodex){
   var wing = {};
   if (key === "l"){wing.levels = []}
   else if (key === "der"){wing.ders = []}
 
-  if (key === "l" || key === "der" || key === "adj" || key === "adv") {
+  if (key.slice(-1) === "l" || key === "der" || key === "adj" || key === "adv") {
     for (var i = 0, ii = Object.keys(sequence).length; i < ii; i ++){
       for (var y = 0, yy = Object.keys(sequence[Object.keys(sequence)[i]]).length; y < yy; y ++){
-        if (key === "l"){
+        if (key.slice(-1) === "l"){
           var middleKey = Object.keys(sequence)[i]
           var subKey = Object.keys(sequence[middleKey])[y]
+          console.log(codexSequence)
           var codex = codexSequence[key][middleKey] + codexSequence[subKey]
-          var feather = codex.replace(/\$/, letters[0].toLowerCase());
-          feather = feather.replace(/\^/, letters[1].toLowerCase());
-          feather = feather.replace(/\*/, letters[2].toLowerCase());
-          feather = feather.charAt(0).toUpperCase() + feather.slice(1);
-
           var comboKey = key + middleKey + subKey;
 
-          wing.levels.push({form: comboKey, feather: feather, def: sequence[middleKey][subKey].def})
+          var stored = codexSequence[key][middleKey] + codexSequence[subKey]
+          // console.log(codexSequence[key][middleKey] + codexSequence[subKey])
+          if (comboKey === 'lol'){
+
+            // console.log(comboKey)
+            // console.log(letters)
+            // console.log(codexSequence[key][middleKey])
+            // console.log(codexSequence)
+          }
+          wing.levels.push(propogateFeathers(comboKey, letters, codexSequence, sequence[middleKey][subKey], stored))
         }
         else if (key === "der"){
           var middleKey = Object.keys(sequence)[i]
@@ -39,7 +61,14 @@ var propogateFeathers = function(key, letters, codexSequence, sequence){
     }
   }
   else{
-    var codex = codexSequence[key];
+    if (typeof preSetCodex === 'string'){
+      var codex = preSetCodex;
+    }
+    else{
+      var codex = codexSequence[key];
+    }
+
+
     var feather = codex.replace(/\$/, letters[0].toLowerCase());
     feather = feather.replace(/\^/, letters[1].toLowerCase());
     feather = feather.replace(/\*/, letters[2].toLowerCase());
@@ -109,6 +138,6 @@ angular.module('myApp.dictionary', ['ngRoute'])
         wings.push(result);
       }
     }
-
+console.log(wings)
     $scope.root.wings = wings;
 }])
