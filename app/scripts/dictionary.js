@@ -1,5 +1,27 @@
 'use strict';
 
+var flattenObject = function(ob) {
+  // https://gist.github.com/penguinboy/762197
+  var toReturn = {};
+
+  for (var i in ob) {
+    if (!ob.hasOwnProperty(i)) continue;
+
+    if ((typeof ob[i]) == 'object') {
+      var flatObject = flattenObject(ob[i]);
+      for (var x in flatObject) {
+        console.log([ob,x])
+        if (!flatObject.hasOwnProperty(x)) continue;
+
+        toReturn[i + '.' + x] = flatObject[x];
+      }
+    } else {
+      toReturn[i] = ob[i];
+    }
+  }
+  return toReturn;
+};
+
 var generateCodex = function(key, masterCodex){
   var splitKey = key.split('').reverse();
   var skeletonCodex = "";
@@ -28,7 +50,7 @@ var propogateFeathers = function(key, letters, codexSequence, sequence, preSetCo
         if (key.slice(-1) === "l"){
           var middleKey = Object.keys(sequence)[i]
           var subKey = Object.keys(sequence[middleKey])[y]
-          console.log(codexSequence)
+          // console.log(codexSequence)
           var codex = codexSequence[key][middleKey] + codexSequence[subKey]
           var comboKey = key + middleKey + subKey;
 
@@ -116,7 +138,7 @@ angular.module('myApp.dictionary', ['ngRoute'])
     $scope.letters = $routeParams.root.toUpperCase();
     $scope.title = 'Dictionary: ' + $scope.letter;
     $scope.root = json_grab.roots[$routeParams.root.toUpperCase()];
-
+console.log(flattenObject($scope.root))
     var rootRecord = $scope.root;
     var wings = [];
 
@@ -138,6 +160,6 @@ angular.module('myApp.dictionary', ['ngRoute'])
         wings.push(result);
       }
     }
-console.log(wings)
+    console.log(flattenObject(wings))
     $scope.root.wings = wings;
 }])
