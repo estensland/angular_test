@@ -1,57 +1,57 @@
 'use strict';
 
-var flattenObject = function(ob) {
-  // https://gist.github.com/penguinboy/762197
-  var toReturn = {};
+// var flattenObject = function(ob) {
+//   // https://gist.github.com/penguinboy/762197
+//   var toReturn = {};
 
-  for (var i in ob) {
-    if (!ob.hasOwnProperty(i)) continue;
+//   for (var i in ob) {
+//     if (!ob.hasOwnProperty(i)) continue;
 
-    if ((typeof ob[i]) == 'object') {
-      var flatObject = flattenObject(ob[i]);
-      for (var x in flatObject) {
-        if (!flatObject.hasOwnProperty(x)) continue;
+//     if ((typeof ob[i]) == 'object') {
+//       var flatObject = flattenObject(ob[i]);
+//       for (var x in flatObject) {
+//         if (!flatObject.hasOwnProperty(x)) continue;
 
-        toReturn[i + '.' + x] = flatObject[x];
-      }
-    } else {
-      toReturn[i] = ob[i];
-    }
-  }
-  return toReturn;
-};
+//         toReturn[i + '.' + x] = flatObject[x];
+//       }
+//     } else {
+//       toReturn[i] = ob[i];
+//     }
+//   }
+//   return toReturn;
+// };
 
-var generateCodex = function(key, masterCodex){
-  var skeletonCodex = "";
-  for (var i = 0, ii = key.length; i < ii; i++) {
-    var codexFraction = masterCodex[key[i]];
+// var generateCodex = function(key, masterCodex){
+//   var skeletonCodex = "";
+//   for (var i = 0, ii = key.length; i < ii; i++) {
+//     var codexFraction = masterCodex[key[i]];
 
-    if(!codexFraction){
-      codexFraction = masterCodex[key[i+1]];
-      codexFraction = codexFraction[key[i]];
-      i++;
-   }
-   if (key[i] === 'd'){
-    var vowelHarmony = skeletonCodex.match(/a/) ? 'a' : 'e'
-    skeletonCodex = skeletonCodex.replace(/\*/, '*' + vowelHarmony + codexFraction);
-   }
-   else{
-    skeletonCodex = codexFraction + skeletonCodex;
-   }
-  };
-  return skeletonCodex;
-}
+//     if(!codexFraction){
+//       codexFraction = masterCodex[key[i+1]];
+//       codexFraction = codexFraction[key[i]];
+//       i++;
+//    }
+//    if (key[i] === 'd'){
+//     var vowelHarmony = skeletonCodex.match(/a/) ? 'a' : 'e'
+//     skeletonCodex = skeletonCodex.replace(/\*/, '*' + vowelHarmony + codexFraction);
+//    }
+//    else{
+//     skeletonCodex = codexFraction + skeletonCodex;
+//    }
+//   };
+//   return skeletonCodex;
+// }
 
-var propogateFeather = function(key, letters){
-  letters = letters.toLowerCase()
-  return key.replace(/\$/, letters[0]).replace(/\^/, letters[1]).replace(/\*/, letters[2])
-}
+// var propogateFeather = function(key, letters){
+//   letters = letters.toLowerCase()
+//   return key.replace(/\$/, letters[0]).replace(/\^/, letters[1]).replace(/\*/, letters[2])
+// }
 
-var processKey = function(key){
-  var splitKey = key.split('.').reverse();
-  splitKey.shift()
-  return splitKey
-}
+// var processKey = function(key){
+//   var splitKey = key.split('.').reverse();
+//   splitKey.shift()
+//   return splitKey
+// }
 
 angular.module('myApp.createWords', ['ngRoute'])
 
@@ -69,22 +69,17 @@ angular.module('myApp.createWords', ['ngRoute'])
     });
   }])
 
-  .controller('CreateWordsCtrl', ['$scope', 'json_grab', '$routeParams', function($scope, json_grab, $routeParams) {
-    $scope.codex = json_grab.codex;
+  .controller('CreateWordsCtrl', ['$scope', '$http', 'json_grab', '$routeParams', function($scope, $http, json_grab, $routeParams) {
+    $scope.title = 'Create Words';
     $scope.letters = $routeParams.root.toUpperCase();
-    $scope.title = 'Dictionary: ' + $scope.letter;
     $scope.root = json_grab.roots[$routeParams.root.toUpperCase()];
-    var rootRecord = $scope.root;
-    var wings = [];
+    json_grab.loooper = 'cheese'
+    $scope.json = json_grab
 
-    var flatObj = flattenObject(rootRecord.sequence);
-    var objKeys = Object.keys(flatObj);
-
-    for(var i = 0, ii = objKeys.length; i < ii; i ++){
-      var processedKey = processKey(objKeys[i])
-      var specificCodex = generateCodex(processedKey, $scope.codex);
-      var feather = propogateFeather(specificCodex,$scope.letters)
-      wings.push({form: processedKey.reverse().join(''), feather: feather, def:flatObj[objKeys[i]]});
+    $scope.save = function(){
+      console.log($scope.json)
+      $http.get('/api/roots.json', $scope.json).then(function(data) {
+        $scope.msg = 'Data saved';
+      });
     }
-    $scope.root.wings = wings;
   }]);
