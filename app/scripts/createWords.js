@@ -1,5 +1,58 @@
 'use strict';
 
+var flattenObject = function(ob) {
+  // https://gist.github.com/penguinboy/762197
+  var toReturn = {};
+
+  for (var i in ob) {
+    if (!ob.hasOwnProperty(i)) continue;
+
+    if ((typeof ob[i]) == 'object') {
+      var flatObject = flattenObject(ob[i]);
+      for (var x in flatObject) {
+        if (!flatObject.hasOwnProperty(x)) continue;
+
+        toReturn[i + '.' + x] = flatObject[x];
+      }
+    } else {
+      toReturn[i] = ob[i];
+    }
+  }
+  return toReturn;
+};
+
+var generateCodex = function(key, masterCodex){
+  var skeletonCodex = "";
+  for (var i = 0, ii = key.length; i < ii; i++) {
+    var codexFraction = masterCodex[key[i]];
+
+    if(!codexFraction){
+      codexFraction = masterCodex[key[i+1]];
+      codexFraction = codexFraction[key[i]];
+      i++;
+   }
+   if (key[i] === 'd'){
+    var vowelHarmony = skeletonCodex.match(/a/) ? 'a' : 'e'
+    skeletonCodex = skeletonCodex.replace(/\*/, '*' + vowelHarmony + codexFraction);
+   }
+   else{
+    skeletonCodex = codexFraction + skeletonCodex;
+   }
+  };
+  return skeletonCodex;
+}
+
+var propogateFeather = function(key, letters){
+  letters = letters.toLowerCase()
+  return key.replace(/\$/, letters[0]).replace(/\^/, letters[1]).replace(/\*/, letters[2])
+}
+
+var processKey = function(key){
+  var splitKey = key.split('.').reverse();
+  splitKey.shift()
+  return splitKey
+}
+
 angular.module('myApp.createWords', ['ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
@@ -17,33 +70,21 @@ angular.module('myApp.createWords', ['ngRoute'])
   }])
 
   .controller('CreateWordsCtrl', ['$scope', 'json_grab', '$routeParams', function($scope, json_grab, $routeParams) {
-    $scope.title = 'Create Words' + $scope.letter;;
-
     $scope.codex = json_grab.codex;
     $scope.letters = $routeParams.root.toUpperCase();
+    $scope.title = 'Dictionary: ' + $scope.letter;
     $scope.root = json_grab.roots[$routeParams.root.toUpperCase()];
-
     var rootRecord = $scope.root;
     var wings = [];
 
-    var objKeys = Object.keys(rootRecord.sequence)
+    var flatObj = flattenObject(rootRecord.sequence);
+    var objKeys = Object.keys(flatObj);
 
     for(var i = 0, ii = objKeys.length; i < ii; i ++){
-      var result = propogateFeathers(objKeys[i], $scope.letters, $scope.codex, rootRecord.sequence[objKeys[i]])
-      if (typeof result.levels === 'object'){
-        for (var z = 0, zz = result.levels.length; z < zz; z ++) {
-          wings.push(result.levels[z]);
-        };
-      }
-      else if (typeof result.ders === 'object'){
-        for (var z = 0, zz = result.ders.length - 1; z < zz; z ++) {
-          wings.push(result.ders[z]);
-        };
-      }
-      else{
-        wings.push(result);
-      }
+      var processedKey = processKey(objKeys[i])
+      var specificCodex = generateCodex(processedKey, $scope.codex);
+      var feather = propogateFeather(specificCodex,$scope.letters)
+      wings.push({form: processedKey.reverse().join(''), feather: feather, def:flatObj[objKeys[i]]});
     }
-
     $scope.root.wings = wings;
   }]);
