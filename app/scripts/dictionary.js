@@ -97,11 +97,25 @@ angular.module('myApp.dictionary', ['ngRoute'])
     var flatObj = flattenObject(rootRecord.sequence);
     var objKeys = Object.keys(flatObj);
 
+    var wings = []
     for(var i = 0, ii = objKeys.length; i < ii; i ++){
       var processedKey = processKey(objKeys[i])
       var specificCodex = generateCodex(processedKey, $scope.codex);
       var feather = propogateFeather(specificCodex,$scope.letters)
-      wings.push({form: processedKey.reverse().join(''), feather: feather, def:flatObj[objKeys[i]]});
+
+      var wingKey;
+      if(processedKey[processedKey.length - 1] === 'd'){
+        wingKey = processedKey[processedKey.length - 2]
+      }
+      else{
+        wingKey = '0'
+      }
+      wingKey = wingKey.toString()
+      if(!wings[wingKey]){wings[wingKey] = []}
+
+      wings[wingKey].push({form: processedKey.reverse().join(''), feather: feather, def:flatObj[objKeys[i]]});
     }
+
+    console.log(wings)
     $scope.root.wings = wings;
 }])
