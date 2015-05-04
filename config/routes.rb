@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  scope "api", defaults: {format: :json} do
-    resources :posts
+  namespace :api, defaults: {format: :json} do
+    resources :task_lists, only: [:index] do
+      resources :tasks, only: [:index, :create, :update, :destroy]
+    end
   end
-  # Actual routing is happening in the Angular router
-  root to: "welcome#index", anchor: false
 end
