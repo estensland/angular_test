@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+list1 = List.create(name: "Test List")
+list1.tasks << Task.create(text: "Complete TODO list code", )
+
+
+list2 = List.create(name: "Stuff To Do")
