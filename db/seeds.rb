@@ -8,7 +8,11 @@
 
 
 list1 = List.create(name: "Test List")
-list1.tasks << Task.create(text: "Complete TODO list code", )
+list1.tasks << Task.create(text: "Complete TODO list code")
+list1.tasks << Task.create(text: "Swim the ocean")
+list1.tasks << Task.create(text: "Invent odorless garlic")
 
 
 list2 = List.create(name: "Stuff To Do")
+list2.tasks << Task.create(text: "Climb Katmandu")
+list2.tasks << Task.create(text: "Eat Pickles")
