@@ -3,20 +3,22 @@
 angular.module('myApp.list', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/:id', {
-    templateUrl: '/app/partials/home',
+  $routeProvider.when('/lists/:id/tasks', {
+    templateUrl: '/javascripts/templates/list',
     controller: 'ListCtrl',
-     resolve: {
-        json_grab: ['$http','$routeParams', function($http, $routeParams) {
-          return $http.get('/api/lists/' + $routeParams + 'tasks').then(function(response) {
-            return response.data;
-          });
-        }],
-      }
+    resolve: {
+      json_grab: ['$http', '$route', function($http, $route) {
+        console.log('/api/lists/' + $route.current.params.id + '/tasks')
+        return $http.get('/api/lists/' + $route.current.params.id + '/tasks').then(function(response) {
+          return response.data;
+        });
+      }],
+    }
   });
 }])
 
 .controller('ListCtrl', ['$scope', 'json_grab', function($scope, json_grab ) {
+  console.log(json_grab)
   $scope.json = json_grab
+  $scope.test = "goooper"
 }]);
-console.log('asdasd')

@@ -10,10 +10,10 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="myApp" ng-controller="HomeCtrl">
+<body ng-app="myApp", ng-view >
 
 <%= yield %>
 
-<a ng-href="/lists/1">{{test}}</a>
+<a ng-href="#/lists/1">{{test}}</a>
 </body>
 </html>

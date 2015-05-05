@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root :to => 'welcome#index', anchor: false
+  root :to => 'welcome#index'
+  get '*path' => 'welcome#index'
 end
