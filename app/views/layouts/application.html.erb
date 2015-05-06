@@ -10,9 +10,11 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="myApp", ng-view >
+<body>
 
-<%= yield %>
+  <div ng-app="myApp", ng-view >
+    <%= yield %>
+  </div>
 
 </body>
 </html>

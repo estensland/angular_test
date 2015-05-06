@@ -1,10 +1,9 @@
 'use strict';
-
 angular.module('myApp.list', ['ngRoute', 'templates'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/lists/:id/tasks', {
-    templateUrl: '/javascripts/templates/list',
+    templateUrl: '<%= asset_path("list.html") %>',
     controller: 'ListCtrl',
     resolve: {
       json_grab: ['$http', '$route', function($http, $route) {
