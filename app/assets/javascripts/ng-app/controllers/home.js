@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('myApp.home', ['ngRoute'])
+angular.module('myApp.home', ['ngRoute', 'templates'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: 'home.html',
-    controller: 'HomeCtrl'
+    controller: 'HomeCtrl',
+    templateUrl: 'home.html'
   });
 }])
 .controller('HomeCtrl', ['$scope', function($scope) {

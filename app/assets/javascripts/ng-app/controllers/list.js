@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.list', ['ngRoute'])
+angular.module('myApp.list', ['ngRoute', 'templates'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/lists/:id/tasks', {

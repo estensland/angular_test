@@ -6,6 +6,7 @@ angular.module('myApp', [
   'myApp.home',
   'myApp.list'
 
-]).config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/'});
-}]);
+])
+// .config(['$routeProvider', function($routeProvider) {
+//   $routeProvider.otherwise({redirectTo: '/chese'});
+// }]);
