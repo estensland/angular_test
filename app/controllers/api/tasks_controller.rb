@@ -5,7 +5,7 @@ class Api::TasksController < ApplicationController
 
   def index
     list = List.find(params['list_id'])
-    render json: list.tasks, status: 200
+    render json: {list: list, tasks: list.tasks}, status: 200
   end
 
   def create

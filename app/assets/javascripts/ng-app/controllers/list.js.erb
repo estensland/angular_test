@@ -6,8 +6,7 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
     templateUrl: '<%= asset_path("list.html") %>',
     controller: 'ListCtrl',
     resolve: {
-      json_grab: ['$http', '$route', function($http, $route) {
-        console.log('/api/lists/' + $route.current.params.id + '/tasks')
+      jsonGrab: ['$http', '$route', function($http, $route) {
         return $http.get('/api/lists/' + $route.current.params.id + '/tasks').then(function(response) {
           return response.data;
         });
@@ -16,8 +15,8 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
   });
 }])
 
-.controller('ListCtrl', ['$scope', 'json_grab', function($scope, json_grab ) {
-  console.log(json_grab)
-  $scope.json = json_grab
-  $scope.test = "goooper"
+.controller('ListCtrl', ['$scope', 'jsonGrab', function($scope, jsonGrab ) {
+  $scope.taskJson = jsonGrab.tasks;
+  $scope.listJson = jsonGrab.list;
+  $scope.test = "goooper";
 }]);

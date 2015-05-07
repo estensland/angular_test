@@ -5,9 +5,17 @@ angular.module('myApp.home', ['ngRoute', 'templates'])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
     controller: 'HomeCtrl',
-    templateUrl: '<%= asset_path("home.html") %>'
+    templateUrl: '<%= asset_path("home.html") %>',
+    resolve: {
+      jsonGrab: ['$http', '$route', function($http, $route) {
+        return $http.get('/api/lists/').then(function(response) {
+          return response.data;
+        });
+      }],
+    }
   });
 }])
-.controller('HomeCtrl', ['$scope', function($scope) {
-  $scope.test = 'looper'
+.controller('HomeCtrl', ['$scope', 'jsonGrab', function($scope, jsonGrab) {
+  $scope.test = 'looper';
+  $scope.json = jsonGrab;
 }]);

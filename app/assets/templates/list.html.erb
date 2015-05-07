@@ -1,1 +1,13 @@
-HEEEHEEEE
+{{listJson.name}}
+<div>
+  <table>
+    <tr ng-repeat="task in taskJson">
+      <td>
+        <input type="checkbox" ng-checked="{{task.completed}}">
+      </td>
+      <td>
+        <p>{{task.text}}</p>
+      </td>
+    </tr>
+  </table>
+</div>

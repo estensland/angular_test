@@ -1,4 +1,7 @@
-<iframe src="https://wwww.google.com" frameborder="0"></iframe>
 <div>
-  lopopopop
+  <ul ng-repeat="list in json">
+    <li>
+      <a ng-href="#/lists/{{list.id}}/tasks">{{list.name}}</a>
+    </li>
+  </ul>
 </div>
