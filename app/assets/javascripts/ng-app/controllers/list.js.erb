@@ -18,5 +18,4 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
 .controller('ListCtrl', ['$scope', 'jsonGrab', function($scope, jsonGrab ) {
   $scope.taskJson = jsonGrab.tasks;
   $scope.listJson = jsonGrab.list;
-  $scope.test = "goooper";
 }]);

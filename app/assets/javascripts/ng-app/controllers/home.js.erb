@@ -16,6 +16,5 @@ angular.module('myApp.home', ['ngRoute', 'templates'])
   });
 }])
 .controller('HomeCtrl', ['$scope', 'jsonGrab', function($scope, jsonGrab) {
-  $scope.test = 'looper';
   $scope.json = jsonGrab;
 }]);
