@@ -1,7 +1,7 @@
 class Api::TasksController < ApplicationController
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
 
   def index
     list = List.find(params['list_id'])
@@ -18,6 +18,12 @@ class Api::TasksController < ApplicationController
     task = Task.find(params['id'])
     task.update_attributes(safe_params)
     render nothing: true, status: 204
+  end
+
+  def destroy
+    task = Task.find(params['id'])
+    task.destroy
+    render nothing: true
   end
 
   def safe_params

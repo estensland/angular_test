@@ -15,7 +15,13 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
   });
 }])
 
-.controller('ListCtrl', ['$scope', 'jsonGrab', function($scope, jsonGrab ) {
+.controller('ListCtrl', ['$scope', 'jsonGrab', '$http', function($scope, jsonGrab, $http) {
   $scope.taskJson = jsonGrab.tasks;
   $scope.listJson = jsonGrab.list;
+  $scope.echo = function(list, task){
+    $http.delete('/api/lists/' + list.id + '/tasks/' + task.id)
+    // return $http.delete('/api/lists/' + $route.current.params.id + '/tasks').then(function(response) {
+    //   return response.data;
+    // }
+  }
 }]);
