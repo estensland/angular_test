@@ -27,4 +27,8 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
   $scope.createRoute = function(list, task){
     $http.post('/api/lists/' + list.id + '/tasks/', {text: task})
   }
+
+  $scope.updateRoute = function(list, task){
+    $http.patch('/api/lists/' + list.id + '/tasks/' + task.id, {completed: task.completed})
+  }
 }]);

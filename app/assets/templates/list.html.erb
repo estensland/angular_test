@@ -3,7 +3,7 @@
   <table>
     <tr ng-repeat="task in taskJson">
       <td>
-        <input type="checkbox" ng-checked="{{task.completed}}">
+        <input ng-model="task.completed" type="checkbox" ng-checked="{{task.completed}}" ng-click="updateRoute(listJson, task)">
       </td>
       <td>
         <p>{{task.text}}</p>
