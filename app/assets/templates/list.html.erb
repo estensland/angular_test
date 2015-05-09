@@ -9,7 +9,7 @@
         <p>{{task.text}}</p>
       </td>
       <td>
-        Delete: <a style="color:red; cursor:pointer" ng-click="echo(listJson, task)">X</a>
+        Delete: <a style="color:red; cursor:pointer" ng-click="destroyRoute(listJson, task)">X</a>
       </td>
     </tr>
     <tr>
@@ -17,7 +17,10 @@
         <input type="checkbox">
       </td>
       <td>
-        <input value="">
+        <input ng-model="taskText">
+      </td>
+      <td>
+        <button ng-click="createRoute(listJson, taskText)">Create</a>
       </td>
     </tr>
   </table>

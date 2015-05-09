@@ -17,11 +17,14 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
 
 .controller('ListCtrl', ['$scope', 'jsonGrab', '$http', function($scope, jsonGrab, $http) {
   $scope.taskJson = jsonGrab.tasks;
+  $scope.newTask = "New Task"
   $scope.listJson = jsonGrab.list;
-  $scope.echo = function(list, task){
+
+  $scope.destroyRoute = function(list, task){
     $http.delete('/api/lists/' + list.id + '/tasks/' + task.id)
-    // return $http.delete('/api/lists/' + $route.current.params.id + '/tasks').then(function(response) {
-    //   return response.data;
-    // }
+  }
+
+  $scope.createRoute = function(list, task){
+    $http.post('/api/lists/' + list.id + '/tasks/', {text: task})
   }
 }]);
