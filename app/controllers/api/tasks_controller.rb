@@ -23,7 +23,7 @@ class Api::TasksController < ApplicationController
   def destroy
     task = Task.find(params['id'])
     task.destroy
-    render nothing: true
+    render nothing: true, status: 204
   end
 
   def safe_params
