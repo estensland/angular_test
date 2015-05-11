@@ -16,6 +16,7 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
 }])
 
 .controller('ListCtrl', ['$scope', 'jsonGrab', '$http', function($scope, jsonGrab, $http) {
+  $scope.storeTaskList = jsonGrab.tasks;
   $scope.taskJson = jsonGrab.tasks;
   $scope.newTaskText = "";
   $scope.listJson = jsonGrab.list;
@@ -37,5 +38,16 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
 
   $scope.updateRoute = function(list, task){
     $http.patch('/api/lists/' + list.id + '/tasks/' + task.id, {completed: task.completed})
+  }
+
+  $scope.hideCompleted = function(){
+    function completedCheck(task){
+      return !task.completed
+    }
+    $scope.taskJson = $scope.taskJson.filter(completedCheck)
+  }
+
+  $scope.showAll = function(){
+    $scope.taskJson = $scope.storeTaskList
   }
 }]);
