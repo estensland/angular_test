@@ -1,20 +1,12 @@
 {{listJson.name}}
+
 <div>
   <button ng-click="hideCompleted()">Hide Completed</button>
   <button ng-click="showAll()">Show All</button>
 </div>
 <div>
   <table>
-    <tr ng-repeat="task in taskJson">
-      <td>
-        <input ng-model="task.completed" type="checkbox" ng-checked="{{task.completed}}" ng-click="updateRoute(listJson, task)">
-      </td>
-      <td>
-        <p>{{task.text}}</p>
-      </td>
-      <td>
-        Delete: <a style="color:red; cursor:pointer" ng-click="destroyRoute(listJson, task)">X</a>
-      </td>
+    <tr ng-repeat="task in taskJson" task-info task="task" listJson="listJson">
     </tr>
     <tr>
       <td>

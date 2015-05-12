@@ -1,0 +1,14 @@
+angular.module('myApp.directives.taskInfo', [])
+  .directive('taskInfo', function() {
+    return {
+      constrict: 'E',
+      scope: {
+        task: '=',
+        listJson: '='
+      },
+      templateUrl: '<%= asset_path("taskInfo.html") %>',
+      controller: function($scope) {
+        console.log('woot')
+      }
+    }
+  })

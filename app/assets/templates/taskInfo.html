@@ -1,0 +1,9 @@
+<td>
+  <input ng-model="task.completed" type="checkbox" ng-checked="{{task.completed}}" ng-click="updateRoute(listJson, task)">
+</td>
+<td>
+  <p>{{task.text}}</p>
+</td>
+<td>
+  Delete: <a style="color:red; cursor:pointer" ng-click="destroyRoute(listJson, task)">X</a>
+</td>
