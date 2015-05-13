@@ -21,23 +21,11 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
   $scope.newTaskText = "";
   $scope.listJson = jsonGrab.list;
 
-  $scope.destroyRoute = function(list, task){
-    $http.delete('/api/lists/' + list.id + '/tasks/' + task.id).success(function(reply, status){
-      if (status === 204) {
-        $scope.taskJson.splice($scope.taskJson.indexOf(task), 1);
-      };
-    })
-  }
-
   $scope.createRoute = function(list, task){
     $http.post('/api/lists/' + list.id + '/tasks/', {text: task}).success( function(newCreatedTask){
       $scope.taskJson.push(newCreatedTask);
       $scope.newTaskText = "";
     })
-  }
-
-  $scope.updateRoute = function(list, task){
-    $http.patch('/api/lists/' + list.id + '/tasks/' + task.id, {completed: task.completed})
   }
 
   $scope.hideCompleted = function(){
