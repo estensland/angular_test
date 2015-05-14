@@ -43,9 +43,20 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
     return !task.hide
   }
 
-  $scope.showAll = function(list){
+  $scope.showAll = function(){
     for (var i = 0, ii = $scope.taskJson.length; i < ii; i++) {
       $scope.taskJson[i].hide = false
     };
+  }
+
+  $scope.sortCreated = function(){
+    function compareDates(a, b) {
+      return a - b;
+    }
+
+    $scope.taskJson = $scope.taskJson.sort(function(a, b) {
+      return parseInt(a.created_at.match(/\d/g).join('')) - parseInt(b.created_at.match(/\d/g).join(''));
+    })
+
   }
 }]);
