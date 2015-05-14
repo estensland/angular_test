@@ -16,7 +16,6 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
 }])
 
 .controller('ListCtrl', ['$scope', 'jsonGrab', '$http', function($scope, jsonGrab, $http) {
-  $scope.storeTaskList = jsonGrab.tasks;
   $scope.taskJson = jsonGrab.tasks;
   $scope.newTaskText = "";
   $scope.listJson = jsonGrab.list;
@@ -30,12 +29,23 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
 
   $scope.hideCompleted = function(){
     function completedCheck(task){
-      return !task.completed
+      return task.completed
     }
-    $scope.taskJson = $scope.taskJson.filter(completedCheck)
+
+    var hiders = $scope.taskJson.filter(completedCheck)
+
+    for (var i = 0, ii = hiders.length; i < ii; i++) {
+      hiders[i].hide = true
+    };
   }
 
-  $scope.showAll = function(){
-    $scope.taskJson = $scope.storeTaskList
+  $scope.displayTask = function(task){
+    return !task.hide
+  }
+
+  $scope.showAll = function(list){
+    for (var i = 0, ii = $scope.taskJson.length; i < ii; i++) {
+      $scope.taskJson[i].hide = false
+    };
   }
 }]);
