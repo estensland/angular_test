@@ -20,6 +20,21 @@ angular.module('myApp.list', ['ngRoute', 'templates'])
   $scope.newTaskText = "";
   $scope.listJson = jsonGrab.list;
 
+  $scope.categories = jsonGrab.categories.map(function(c){return c.name});
+
+  $scope.categoryObject = {};
+
+  for (var i = 0, ii = jsonGrab.categories.length; i < ii; i++) {
+    var cat = jsonGrab.categories[i];
+    $scope.categoryObject[cat.id] = {name: cat.name, id: cat.id};
+  };
+
+  for (var i = 0, ii = jsonGrab.tasks.length; i < ii; i++) {
+    var catId = parseInt($scope.taskJson[i].category_id);
+    $scope.taskJson[i].category = $scope.categoryObject[catId];
+  };
+
+
   $scope.createRoute = function(list, task){
     $http.post('/api/lists/' + list.id + '/tasks/', {text: task}).success( function(newCreatedTask){
       $scope.taskJson.push(newCreatedTask);

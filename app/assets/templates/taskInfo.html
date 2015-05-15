@@ -6,5 +6,10 @@
 </td>
 
 <td>
+  <select data-ng-model="task.category.name" data-ng-options="cat for cat in categories">
+  </select>
+</td>
+
+<td>
   Delete: <a style="color:red; cursor:pointer" ng-click="destroyRoute(list, task)">X</a>
 </td>
