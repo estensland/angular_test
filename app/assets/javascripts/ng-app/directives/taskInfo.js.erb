@@ -6,7 +6,8 @@ angular.module('myApp.directives.taskInfo', [])
         task: '=',
         list: '=',
         categories: '=',
-        categoryObject: '=',
+        obj: '=',
+        selectedItem: '=',
         tasks: '='
       },
 
@@ -18,6 +19,10 @@ angular.module('myApp.directives.taskInfo', [])
               $scope.tasks.splice($scope.tasks.indexOf(task), 1);
             };
           })
+        }
+
+        if ($scope.task.category){
+          $scope.selectedItem = $scope.selectedItem[$scope.task.category.id - 1]
         }
 
         $scope.updateRoute = function(list, task){

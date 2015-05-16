@@ -4,9 +4,8 @@
 <td>
   <p>{{task.text}}</p>
 </td>
-
 <td>
-  <select data-ng-model="task.category.name" data-ng-options="cat for cat in categories">
+  <select ng-model="selectedItem" ng-options="category.name for category in obj">
   </select>
 </td>
 
