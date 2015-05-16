@@ -5,7 +5,7 @@
   <p>{{task.text}}</p>
 </td>
 <td>
-  <select ng-model="selectedItem" ng-options="category.name for category in obj">
+  <select ng-model="task.category" ng-options="category.name for category in obj" ng-change="updateRoute(list, task)">
   </select>
 </td>
 

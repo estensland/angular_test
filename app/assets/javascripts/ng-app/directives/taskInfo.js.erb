@@ -26,7 +26,7 @@ angular.module('myApp.directives.taskInfo', [])
         }
 
         $scope.updateRoute = function(list, task){
-          $http.patch('/api/lists/' + list.id + '/tasks/' + task.id, {completed: task.completed})
+          $http.patch('/api/lists/' + list.id + '/tasks/' + task.id, {completed: task.completed, category_id: task.category.id})
         }
       }
     }
